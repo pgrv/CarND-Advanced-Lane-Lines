@@ -61,7 +61,7 @@ I used the output from the previous step and the `cvs.undistort()` function to u
 #### 2. Describe how (and identify where in your code) you used color transforms, gradients or other methods to create a thresholded binary image.  Provide an example of a binary image result.
 
 In the section "create binary image" I created the binary image.
-I tried different methods. First I converted the image into a grayscale image, into the hls color space and into hsvl color space. Then I applied a sobel in x and y direction on the grayscale image. I also tried the direction and the magnitude of the gradient, but I was not convinced by the result. I also use a threshold on the s-channel of the hsl-picture and a threshold on the v-channel of the hsv-picture. I saw the convertion into the hsv color space in the following video https://www.youtube.com/watch?v=vWY8YUayf9Q&list=PLAwxTw4SYaPkz3HerxrHlu1Seq8ZA7-5P&index=4.
+I tried different methods. First I converted the image into a grayscale image, into the hls color space and into hsv color space. Then I applied a sobel in x and y direction on the grayscale image. I also tried the direction and the magnitude of the gradient, but I was not convinced by the result. I also use a threshold on the s-channel of the hsl-picture and a threshold on the v-channel of the hsv-picture. I saw the convertion into the hsv color space in the following video https://www.youtube.com/watch?v=vWY8YUayf9Q&list=PLAwxTw4SYaPkz3HerxrHlu1Seq8ZA7-5P&index=4.
 So in the end I used a combination to generate a binary image. Here's an example of my output for this step:
 
 ![Binary image][image3]
@@ -113,4 +113,7 @@ Here's a [link to my video result](./project_video_output.mp4)
 
 #### 1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
-Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
+Like already said, I have hard values for source and destination of the perspective transform. These values shall be in dependence of the image size. Or the input image shall be resized so that always the same image size is used. So the pipeline could be fail if the image size is not the same.
+I used in the pipeline a history so that the average of the last 5 fits is used. But it is not already smooth enough. Thats maybe because the binary image creation is not good enough. So it could be used other threshold values or again magnitude and direction of the gradient or maybe an other color space (lab,...).
+A method to make it more robust is that if the curvature of a lane changes too much compared to the previous frame, the lane could be set invalid.
+Additionally it could be used a gaussian blur or a filtering like Kalman.
